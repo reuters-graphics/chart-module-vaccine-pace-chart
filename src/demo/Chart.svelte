@@ -20,9 +20,11 @@ Follow the notes below! -->
   // 🎈 Tie your custom props back together into one chartProps object.
   $: chartProps = { fill: circleFill };
 
-  afterUpdate(async() => {
+  afterUpdate(async () => {
     if (!chartData) {
-      const res = await fetch('https://graphics.thomsonreuters.com/data/2020/coronavirus/owid-covid-vaccinations/rolling-averages-by-country.json');
+      const res = await fetch(
+        'https://graphics.thomsonreuters.com/data/2020/coronavirus/owid-covid-vaccinations/rolling-averages-by-country.json'
+      );
       chartData = await res.json();
     }
     // 💪 Create a new chart instance of your module.
@@ -36,15 +38,6 @@ Follow the notes below! -->
   });
 </script>
 
-<!-- 🖌️ Style your demo page here -->
-<style lang="scss">
-  .chart-options {
-    button {
-      padding: 5px 15px;
-    }
-  }
-</style>
-
 <div id="vaccine-pace-chart-container" bind:this={chartContainer} />
 
 <div class="chart-options">
@@ -53,5 +46,14 @@ Follow the notes below! -->
 
 <!-- ⚙️ These components will automatically create interactive documentation for you chart! -->
 <Docs />
-<Explorer title='Data' data={chart.data()} />
-<Explorer title='Props' data={chart.props()} />
+<Explorer title="Data" data={chart.data()} />
+<Explorer title="Props" data={chart.props()} />
+
+<!-- 🖌️ Style your demo page here -->
+<style lang="scss">
+  .chart-options {
+    button {
+      padding: 5px 15px;
+    }
+  }
+</style>

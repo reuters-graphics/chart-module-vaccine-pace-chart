@@ -76,8 +76,10 @@ class VaccinePaceChart {
     const props = this.props(); // Props passed to your chart
 
     const data = Object.keys(rawData)
-      .map(isoAlpha2 => client.getCountry(isoAlpha2))
-      .filter(c => c.dataProfile.population && c.dataProfile.population.d > 1000000)
+      .map((isoAlpha2) => client.getCountry(isoAlpha2))
+      .filter(
+        (c) => c.dataProfile.population && c.dataProfile.population.d > 1000000
+      )
       .map((country) => {
         const avgs = rawData[country.isoAlpha2].slice().reverse();
         const max = Math.max(...avgs);
@@ -85,12 +87,14 @@ class VaccinePaceChart {
 
         return { country, avgs, max, length, last: avgs[0] };
       })
-      .filter(d => d.max > 100);
+      .filter((d) => d.max > 100);
 
-    const allPoints = flatten(data.map(d => {
-      const { country, avgs } = d;
-      return avgs.map((avg, i) => ({ country, avg, i }));
-    }));
+    const allPoints = flatten(
+      data.map((d) => {
+        const { country, avgs } = d;
+        return avgs.map((avg, i) => ({ country, avg, i }));
+      })
+    );
 
     const { margin } = props;
 
@@ -98,10 +102,11 @@ class VaccinePaceChart {
     const { width: containerWidth } = container.getBoundingClientRect(); // Respect the width of your container!
 
     const width = containerWidth - margin.left - margin.right;
-    const height = (containerWidth * props.aspectHeight) - margin.top - margin.bottom;
+    const height =
+      containerWidth * props.aspectHeight - margin.top - margin.bottom;
 
     const xScale = scaleLinear()
-      .domain([0, max(data, d => d.length)])
+      .domain([0, max(data, (d) => d.length)])
       .range([0, width])
       .nice();
 
@@ -111,15 +116,19 @@ class VaccinePaceChart {
     //   .nice();
 
     const yScale = scaleLinear()
-      .domain([0, max(data, d => d.max)])
+      .domain([0, max(data, (d) => d.max)])
       .range([height, 0])
       .nice();
 
     const alphaScale = scaleLinear()
-      .domain([0, max(data, d => d.last)])
+      .domain([0, max(data, (d) => d.last)])
       .range([0, 0.6]);
 
-    const delaunay = Delaunay.from(allPoints, d => xScale(xScale.domain()[1] - d.i), d => yScale(d.avg));
+    const delaunay = Delaunay.from(
+      allPoints,
+      (d) => xScale(xScale.domain()[1] - d.i),
+      (d) => yScale(d.avg)
+    );
 
     const plot = this.selection()
       .appendSelect('svg') // 👈 Use appendSelect instead of append for non-data-bound elements!
@@ -128,9 +137,7 @@ class VaccinePaceChart {
       .appendSelect('g.plot')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    const defs = this.selection()
-      .select('svg')
-      .appendSelect('defs');
+    const defs = this.selection().select('svg').appendSelect('defs');
 
     // plot
     //   .appendSelect('g.axis.x')
@@ -144,10 +151,11 @@ class VaccinePaceChart {
 
     const line = d3Line()
       .x((d, i) => xScale(xScale.domain()[1] - i))
-      .y(d => yScale(d))
+      .y((d) => yScale(d))
       .curve(curveCardinal);
 
-    const highlightDef = defs.appendSelect('linearGradient.highlight')
+    const highlightDef = defs
+      .appendSelect('linearGradient.highlight')
       .attr('id', 'gradient-highlight');
 
     highlightDef
@@ -162,64 +170,71 @@ class VaccinePaceChart {
       .attr('stop-color', '#74c476')
       .attr('stop-opacity', 1);
 
-    const gradients = defs.selectAll('linearGradient.country')
+    const gradients = defs
+      .selectAll('linearGradient.country')
       .data(data)
       .join('linearGradient')
       .attr('class', 'country')
-      .attr('id', d => `gradient-${d.country.isoAlpha2}`);
+      .attr('id', (d) => `gradient-${d.country.isoAlpha2}`);
 
     gradients
       .appendSelect('stop.start')
       .attr('offset', '0%')
-      .attr('stop-color', d => `rgba(255,255,255,${alphaScale(d.last)})`)
+      .attr('stop-color', (d) => `rgba(255,255,255,${alphaScale(d.last)})`)
       .attr('stop-opacity', 0.2);
 
     gradients
       .appendSelect('stop.end')
       .attr('offset', '100%')
-      .attr('stop-color', d => `rgba(255,255,255,${alphaScale(d.last)})`)
+      .attr('stop-color', (d) => `rgba(255,255,255,${alphaScale(d.last)})`)
       .attr('stop-opacity', 1);
 
-    const lines = plot.selectAll('path.line')
+    const lines = plot
+      .selectAll('path.line')
       .data(data)
       .join('path')
-      .attr('class', d => `line country-${d.country.isoAlpha2}`)
+      .attr('class', (d) => `line country-${d.country.isoAlpha2}`)
       // .style('stroke', d => `rgba(255,255,255,${alphaScale(d.max)})`)
-      .attr('stroke', d => `url(#gradient-${d.country.isoAlpha2})`)
+      .attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`)
       .style('stroke-width', 1)
       .style('fill', 'transparent')
-      .attr('d', d => line(d.avgs));
+      .attr('d', (d) => line(d.avgs));
 
-    plot.appendSelect('rect')
+    plot
+      .appendSelect('rect')
       .attr('x', 0)
       .attr('y', 0)
       .attr('height', height)
       .attr('width', width)
       .style('fill', 'transparent')
       .style('cursor', 'crosshair')
-      .on('mousemove', event => {
+      .on('mousemove', (event) => {
         const pointer = d3.pointer(event);
         const index = delaunay.find(...pointer);
         const { country } = allPoints[index];
 
         lines
           .style('stroke-width', 1)
-          .attr('stroke', d => `url(#gradient-${d.country.isoAlpha2})`);
+          .attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
 
-        plot.select(`path.country-${country.isoAlpha2}`)
+        plot
+          .select(`path.country-${country.isoAlpha2}`)
           .style('stroke-width', 2)
           .attr('stroke', 'url(#gradient-highlight)');
 
-        const datum = data.find(d => d.country.isoAlpha2 === country.isoAlpha2);
+        const datum = data.find(
+          (d) => d.country.isoAlpha2 === country.isoAlpha2
+        );
 
-        plot.appendSelect('text')
+        plot
+          .appendSelect('text')
           .attr('x', width + 5)
           .attr('y', yScale(datum.last) + 5)
           .style('fill', '#74c476')
           .text(country.name);
       })
       .on('mouseleave', () => {
-        lines.attr('stroke', d => `url(#gradient-${d.country.isoAlpha2})`);
+        lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
       });
 
     return this; // Generally, always return the chart class from draw!

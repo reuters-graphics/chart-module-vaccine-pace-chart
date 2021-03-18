@@ -1,0 +1,598 @@
+{
+  "inputs": {
+    "dist/scss/demo.css": {
+      "bytes": 309122,
+      "imports": []
+    },
+    "dist/demo/App/App.svelte.css": {
+      "bytes": 42,
+      "imports": []
+    },
+    "_snowpack/pkg/common/index-24c67e07.js": {
+      "bytes": 15094,
+      "imports": []
+    },
+    "_snowpack/pkg/svelte/internal.js": {
+      "bytes": 472,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-24c67e07.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/Nav.svelte.css": {
+      "bytes": 188,
+      "imports": []
+    },
+    "dist/demo/App/Nav.svelte.js": {
+      "bytes": 85262,
+      "imports": [
+        {
+          "path": "dist/demo/App/Nav.svelte.css",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte/internal.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/ChartContainer.svelte.css": {
+      "bytes": 767,
+      "imports": []
+    },
+    "_snowpack/pkg/@fortawesome/free-solid-svg-icons.js": {
+      "bytes": 923,
+      "imports": []
+    },
+    "_snowpack/pkg/fa-svelte.js": {
+      "bytes": 2587,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-24c67e07.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/ChartContainer.svelte.js": {
+      "bytes": 7438,
+      "imports": [
+        {
+          "path": "dist/demo/App/ChartContainer.svelte.css",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte/internal.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/@fortawesome/free-solid-svg-icons.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/fa-svelte.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/svelte.js": {
+      "bytes": 63,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-24c67e07.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/Docs.svelte.css": {
+      "bytes": 330,
+      "imports": []
+    },
+    "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js": {
+      "bytes": 666,
+      "imports": []
+    },
+    "_snowpack/pkg/svelte-highlight.js": {
+      "bytes": 41005,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-24c67e07.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/svelte-highlight/languages.js": {
+      "bytes": 761046,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/svelte-highlight/styles.js": {
+      "bytes": 117819,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/@fortawesome/free-brands-svg-icons.js": {
+      "bytes": 1606,
+      "imports": []
+    },
+    "dist/demo/App/Docs.svelte.js": {
+      "bytes": 4338,
+      "imports": [
+        {
+          "path": "dist/demo/App/Docs.svelte.css",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte/internal.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte-highlight.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte-highlight/languages.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte-highlight/styles.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/@fortawesome/free-brands-svg-icons.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/fa-svelte.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/Explorer.svelte.css": {
+      "bytes": 228,
+      "imports": []
+    },
+    "_snowpack/pkg/svelte-json-tree.js": {
+      "bytes": 58252,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-24c67e07.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/Explorer.svelte.js": {
+      "bytes": 2255,
+      "imports": [
+        {
+          "path": "dist/demo/App/Explorer.svelte.css",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte/internal.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte-json-tree.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/common/string-5bc924f5.js": {
+      "bytes": 13854,
+      "imports": []
+    },
+    "_snowpack/pkg/common/index-2c098da7.js": {
+      "bytes": 23886,
+      "imports": []
+    },
+    "_snowpack/pkg/d3-transition.js": {
+      "bytes": 34401,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/string-5bc924f5.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/common/index-2c098da7.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/d3-selection.js": {
+      "bytes": 2473,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-2c098da7.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/common/index-2c098da7.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/d3-axis.js": {
+      "bytes": 5174,
+      "imports": []
+    },
+    "_snowpack/pkg/common/path-537f9822.js": {
+      "bytes": 4192,
+      "imports": []
+    },
+    "_snowpack/pkg/d3-shape.js": {
+      "bytes": 4307,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/path-537f9822.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/d3-array.js": {
+      "bytes": 1221,
+      "imports": []
+    },
+    "_snowpack/pkg/@reuters-graphics/graphics-atlas-client.js": {
+      "bytes": 340090,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/d3-delaunay.js": {
+      "bytes": 36819,
+      "imports": []
+    },
+    "_snowpack/pkg/d3-appendselect.js": {
+      "bytes": 3073,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-2c098da7.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/common/isArray-3f993132.js": {
+      "bytes": 5566,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/lodash/flatten.js": {
+      "bytes": 2674,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/isArray-3f993132.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/lodash/merge.js": {
+      "bytes": 53237,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/isArray-3f993132.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/d3-path.js": {
+      "bytes": 55,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/path-537f9822.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/d3-scale.js": {
+      "bytes": 22395,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/string-5bc924f5.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/js/index.js": {
+      "bytes": 7588,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/d3-transition.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-selection.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-axis.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-shape.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-array.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/@reuters-graphics/graphics-atlas-client.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-delaunay.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-appendselect.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/lodash/flatten.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/lodash/merge.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-path.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/d3-scale.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/Chart.svelte.js": {
+      "bytes": 4202,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/svelte/internal.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/demo/App/Docs.svelte.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/demo/App/Explorer.svelte.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/js/index.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/App.svelte.js": {
+      "bytes": 2959,
+      "imports": [
+        {
+          "path": "dist/demo/App/App.svelte.css",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/svelte/internal.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/demo/App/Nav.svelte.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/demo/App/ChartContainer.svelte.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/demo/Chart.svelte.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/demo/App/index.js": {
+      "bytes": 108,
+      "imports": [
+        {
+          "path": "dist/demo/App/App.svelte.js",
+          "kind": "import-statement"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "../~~bundle~~/dist/scss/demo.css": {
+      "imports": [],
+      "inputs": {
+        "dist/scss/demo.css": {
+          "bytesInOutput": 251089
+        }
+      },
+      "bytes": 251107
+    },
+    "../~~bundle~~/dist/demo/App/index.js": {
+      "imports": [],
+      "exports": [
+        "default"
+      ],
+      "inputs": {
+        "dist/demo/App/App.svelte.css": {
+          "bytesInOutput": 0
+        },
+        "_snowpack/pkg/common/index-24c67e07.js": {
+          "bytesInOutput": 5317
+        },
+        "_snowpack/pkg/svelte/internal.js": {
+          "bytesInOutput": 0
+        },
+        "dist/demo/App/Nav.svelte.css": {
+          "bytesInOutput": 0
+        },
+        "dist/demo/App/Nav.svelte.js": {
+          "bytesInOutput": 84778
+        },
+        "dist/demo/App/ChartContainer.svelte.css": {
+          "bytesInOutput": 0
+        },
+        "_snowpack/pkg/@fortawesome/free-solid-svg-icons.js": {
+          "bytesInOutput": 641
+        },
+        "_snowpack/pkg/fa-svelte.js": {
+          "bytesInOutput": 1018
+        },
+        "dist/demo/App/ChartContainer.svelte.js": {
+          "bytesInOutput": 2483
+        },
+        "_snowpack/pkg/svelte.js": {
+          "bytesInOutput": 0
+        },
+        "dist/demo/App/Docs.svelte.css": {
+          "bytesInOutput": 0
+        },
+        "_snowpack/pkg/common/_commonjsHelpers-eb5a497e.js": {
+          "bytesInOutput": 381
+        },
+        "_snowpack/pkg/svelte-highlight.js": {
+          "bytesInOutput": 14664
+        },
+        "_snowpack/pkg/svelte-highlight/languages.js": {
+          "bytesInOutput": 876881
+        },
+        "_snowpack/pkg/svelte-highlight/styles.js": {
+          "bytesInOutput": 109889
+        },
+        "_snowpack/pkg/@fortawesome/free-brands-svg-icons.js": {
+          "bytesInOutput": 1372
+        },
+        "dist/demo/App/Docs.svelte.js": {
+          "bytesInOutput": 1614
+        },
+        "dist/demo/App/Explorer.svelte.css": {
+          "bytesInOutput": 0
+        },
+        "_snowpack/pkg/svelte-json-tree.js": {
+          "bytesInOutput": 22586
+        },
+        "dist/demo/App/Explorer.svelte.js": {
+          "bytesInOutput": 761
+        },
+        "_snowpack/pkg/common/string-5bc924f5.js": {
+          "bytesInOutput": 8243
+        },
+        "_snowpack/pkg/common/index-2c098da7.js": {
+          "bytesInOutput": 12025
+        },
+        "_snowpack/pkg/d3-transition.js": {
+          "bytesInOutput": 15680
+        },
+        "_snowpack/pkg/d3-selection.js": {
+          "bytesInOutput": 899
+        },
+        "_snowpack/pkg/d3-axis.js": {
+          "bytesInOutput": 29
+        },
+        "_snowpack/pkg/common/path-537f9822.js": {
+          "bytesInOutput": 1860
+        },
+        "_snowpack/pkg/d3-shape.js": {
+          "bytesInOutput": 2470
+        },
+        "_snowpack/pkg/d3-array.js": {
+          "bytesInOutput": 183
+        },
+        "_snowpack/pkg/@reuters-graphics/graphics-atlas-client.js": {
+          "bytesInOutput": 238008
+        },
+        "_snowpack/pkg/d3-delaunay.js": {
+          "bytesInOutput": 16189
+        },
+        "_snowpack/pkg/d3-appendselect.js": {
+          "bytesInOutput": 948
+        },
+        "_snowpack/pkg/common/isArray-3f993132.js": {
+          "bytesInOutput": 987
+        },
+        "_snowpack/pkg/lodash/flatten.js": {
+          "bytesInOutput": 426
+        },
+        "_snowpack/pkg/lodash/merge.js": {
+          "bytesInOutput": 10857
+        },
+        "_snowpack/pkg/d3-path.js": {
+          "bytesInOutput": 0
+        },
+        "_snowpack/pkg/d3-scale.js": {
+          "bytesInOutput": 10027
+        },
+        "dist/js/index.js": {
+          "bytesInOutput": 3012
+        },
+        "dist/demo/Chart.svelte.js": {
+          "bytesInOutput": 1297
+        },
+        "dist/demo/App/App.svelte.js": {
+          "bytesInOutput": 898
+        },
+        "dist/demo/App/index.js": {
+          "bytesInOutput": 44
+        }
+      },
+      "bytes": 1446825
+    },
+    "../~~bundle~~/dist/demo/App/index.css": {
+      "imports": [],
+      "inputs": {
+        "dist/demo/App/App.svelte.css": {
+          "bytesInOutput": 42
+        },
+        "dist/demo/App/ChartContainer.svelte.css": {
+          "bytesInOutput": 767
+        },
+        "dist/demo/App/Nav.svelte.css": {
+          "bytesInOutput": 188
+        },
+        "dist/demo/App/Docs.svelte.css": {
+          "bytesInOutput": 330
+        },
+        "dist/demo/App/Explorer.svelte.css": {
+          "bytesInOutput": 226
+        }
+      },
+      "bytes": 1554
+    }
+  }
+}
