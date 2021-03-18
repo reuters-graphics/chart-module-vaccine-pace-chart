@@ -2222,10 +2222,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
           return d.country.isoAlpha2 === country.isoAlpha2;
         });
         plot.appendSelect('text').attr('x', width + 5).attr('y', yScale(datum.last) + 5).style('fill', '#74c476').text(country.name);
-      }).on('mouseleave', function () {
-        lines.attr('stroke', function (d) {
-          return "url(#gradient-".concat(d.country.isoAlpha2, ")");
-        });
+      }).on('mouseleave', function () {// lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
       });
       return this; // Generally, always return the chart class from draw!
     }

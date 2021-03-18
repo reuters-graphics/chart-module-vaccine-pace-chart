@@ -234,7 +234,7 @@ class VaccinePaceChart {
           .text(country.name);
       })
       .on('mouseleave', () => {
-        lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
+        // lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
       });
 
     return this; // Generally, always return the chart class from draw!
