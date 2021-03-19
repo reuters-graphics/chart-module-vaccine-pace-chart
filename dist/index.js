@@ -2231,8 +2231,11 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       }).style('stroke-width', 1).style('fill', 'transparent').attr('d', function (d) {
         return line(d.avgs);
       });
-      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('mousemove touchmove', function (event) {
+      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('touchstart', function (event) {
+        return event.preventDefault();
+      }).on('mousemove touchmove', function (event) {
         var pointer = d3.pointer(event);
+        if (!pointer[0] || !pointer[1]) return;
         var index = delaunay.find.apply(delaunay, _toConsumableArray(pointer));
         var country = allPoints[index].country;
         lines.style('stroke-width', 1).attr('stroke', function (d) {

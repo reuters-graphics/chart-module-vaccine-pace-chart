@@ -1,7 +1,7 @@
 {
   "inputs": {
     "dist/scss/demo.css": {
-      "bytes": 310211,
+      "bytes": 310276,
       "imports": []
     },
     "dist/demo/App/App.svelte.css": {
@@ -322,7 +322,7 @@
       ]
     },
     "dist/js/index.js": {
-      "bytes": 9006,
+      "bytes": 9113,
       "imports": [
         {
           "path": "_snowpack/pkg/d3-transition.js",
@@ -439,10 +439,10 @@
       "imports": [],
       "inputs": {
         "dist/scss/demo.css": {
-          "bytesInOutput": 252015
+          "bytesInOutput": 252072
         }
       },
-      "bytes": 252033
+      "bytes": 252090
     },
     "../~~bundle~~/dist/demo/App/index.js": {
       "imports": [],
@@ -559,7 +559,7 @@
           "bytesInOutput": 10027
         },
         "dist/js/index.js": {
-          "bytesInOutput": 3470
+          "bytesInOutput": 3536
         },
         "dist/demo/Chart.svelte.js": {
           "bytesInOutput": 1297
@@ -571,7 +571,7 @@
           "bytesInOutput": 44
         }
       },
-      "bytes": 1447288
+      "bytes": 1447354
     },
     "../~~bundle~~/dist/demo/App/index.css": {
       "imports": [],

@@ -6,6 +6,9 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
 #{$VaccinePaceChart-container} {
   background: #2f353f;
   position: relative;
+  svg rect {
+    touch-action: none;
+  }
   div.tip {
     position: absolute;
     padding: 2px 5px;

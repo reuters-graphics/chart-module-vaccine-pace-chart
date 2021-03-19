@@ -226,8 +226,10 @@ class VaccinePaceChart {
       .attr('width', width)
       .style('fill', 'transparent')
       .style('cursor', 'crosshair')
+      .on('touchstart', (event) => event.preventDefault())
       .on('mousemove touchmove', (event) => {
         const pointer = d3.pointer(event);
+        if (!pointer[0] || !pointer[1]) return;
         const index = delaunay.find(...pointer);
         const { country } = allPoints[index];
 
