@@ -199,7 +199,7 @@ class VaccinePaceChart {
       .appendSelect('stop.start')
       .attr('offset', '0%')
       .attr('stop-color', (d) => `rgba(255,255,255,${alphaScale(d.last)})`)
-      .attr('stop-opacity', 0.2);
+      .attr('stop-opacity', isMobile ? 0.35 : 0.2);
 
     gradients
       .appendSelect('stop.end')
@@ -227,61 +227,55 @@ class VaccinePaceChart {
       .attr('width', width)
       .style('fill', 'transparent')
       .style('cursor', 'crosshair')
-      .on('mousemove touchmove', (event) => {
-        event.preventDefault();
-        const pointer = d3.pointers(event)[0];
-        if (!pointer[0] || !pointer[1]) return;
-        const index = delaunay.find(...pointer);
-        const { country } = allPoints[index];
-
-        lines
-          .style('stroke-width', 1)
-          .attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
-
-        plot
-          .select(`path.country-${country.isoAlpha2}`)
-          .style('stroke-width', 2)
-          .attr('stroke', 'url(#gradient-highlight)');
-
-        const datum = data.find(
-          (d) => d.country.isoAlpha2 === country.isoAlpha2
-        );
-
-        if (isMobile) {
-          tip
-            .style('top', `${margin.top}px`)
-            .style('right', '5px')
-            .style('left', null);
-        } else {
-          tip
-            .style('top', `${yScale(datum.last) + margin.top - 20}px`)
-            .style('right', null)
-            .style('left', `${width + margin.left}px`);
-        }
-
-        tip.appendSelect('h6').style('color', '#74c476').text(country.name);
-
-        tip
-          .appendSelect('p')
-          .text(Math.floor(datum.last).toLocaleString('en'))
-          .appendSelect('span')
-          .text(' doses/100K');
-
-        // plot
-        //   .appendSelect('text.title')
-        //   .attr('x', width + 5)
-        //   .attr('y', yScale(datum.last) - 10)
-        //   .style('fill', '#74c476')
-        //   .text(country.name);
-        // plot
-        //   .appendSelect('text.stat')
-        //   .attr('x', width + 5)
-        //   .attr('y', yScale(datum.last) + 7)
-        //   .text(Math.floor(datum.last).toLocaleString('en'))
-        //   .appendSelect('tspan')
-        //   .text(' doses/100K');
+      .on('touchstart', (event) => {
+        if (event.cancelable) event.preventDefault();
       })
-      .on('mouseleave touchend', () => {
+      .on(
+        'mousemove touchmove',
+        (event) => {
+          if (event.cancelable) event.preventDefault();
+          const pointer = d3.pointers(event)[0];
+          if (!pointer[0] || !pointer[1]) return;
+          const index = delaunay.find(...pointer);
+          const { country } = allPoints[index];
+
+          lines
+            .style('stroke-width', 1)
+            .attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
+
+          plot
+            .select(`path.country-${country.isoAlpha2}`)
+            .style('stroke-width', 2)
+            .attr('stroke', 'url(#gradient-highlight)');
+
+          const datum = data.find(
+            (d) => d.country.isoAlpha2 === country.isoAlpha2
+          );
+
+          if (isMobile) {
+            tip
+              .style('top', `${margin.top}px`)
+              .style('right', '5px')
+              .style('left', null);
+          } else {
+            tip
+              .style('top', `${yScale(datum.last) + margin.top - 20}px`)
+              .style('right', null)
+              .style('left', `${width + margin.left}px`);
+          }
+
+          tip.appendSelect('h6').style('color', '#74c476').text(country.name);
+
+          tip
+            .appendSelect('p')
+            .text(Math.floor(datum.last).toLocaleString('en'))
+            .appendSelect('span')
+            .text(' doses/100K');
+        },
+        { passive: false }
+      )
+      .on('mouseleave touchend', (event) => {
+        if (event.cancelable) event.preventDefault();
         // lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
       });
 
