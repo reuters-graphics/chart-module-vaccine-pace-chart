@@ -57,13 +57,24 @@ class VaccinePaceChart {
    * functions that can get properties from your data.
    */
   defaultProps = {
-    aspectHeight: 0.5,
+    aspectHeight: [
+      { breakpoint: 600, ratio: 0.5 },
+      { breakpoint: 500, ratio: 0.75 },
+      { breakpoint: 0, ratio: 1 },
+    ],
     margin: {
       top: 30,
-      right: 150,
+      right: 100,
       bottom: 35,
-      left: 0,
+      left: 10,
     },
+    mobileMargin: {
+      top: 30,
+      right: 10,
+      bottom: 35,
+      left: 10,
+    },
+    mobileBreakpoint: 600,
     fill: 'grey',
   };
 
@@ -96,14 +107,18 @@ class VaccinePaceChart {
       })
     );
 
-    const { margin } = props;
-
     const container = this.selection().node();
     const { width: containerWidth } = container.getBoundingClientRect(); // Respect the width of your container!
 
+    const isMobile = containerWidth <= props.mobileBreakpoint;
+
+    const margin = isMobile ? props.mobileMargin : props.margin;
+
+    const aspectHeight = props.aspectHeight.find(a => containerWidth > a.breakpoint);
+
     const width = containerWidth - margin.left - margin.right;
     const height =
-      containerWidth * props.aspectHeight - margin.top - margin.bottom;
+      containerWidth * aspectHeight.ratio - margin.top - margin.bottom;
 
     const xScale = scaleLinear()
       .domain([0, max(data, (d) => d.length)])
@@ -138,6 +153,7 @@ class VaccinePaceChart {
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
     const defs = this.selection().select('svg').appendSelect('defs');
+    const tip = this.selection().appendSelect('div.tip');
 
     // plot
     //   .appendSelect('g.axis.x')
@@ -208,7 +224,7 @@ class VaccinePaceChart {
       .attr('width', width)
       .style('fill', 'transparent')
       .style('cursor', 'crosshair')
-      .on('mousemove', (event) => {
+      .on('mousemove touchmove', (event) => {
         const pointer = d3.pointer(event);
         const index = delaunay.find(...pointer);
         const { country } = allPoints[index];
@@ -226,14 +242,42 @@ class VaccinePaceChart {
           (d) => d.country.isoAlpha2 === country.isoAlpha2
         );
 
-        plot
-          .appendSelect('text')
-          .attr('x', width + 5)
-          .attr('y', yScale(datum.last) + 5)
-          .style('fill', '#74c476')
+        if (isMobile) {
+          tip
+            .style('top', `${margin.top}px`)
+            .style('right', '5px')
+            .style('left', null);
+        } else {
+          tip
+            .style('top', `${yScale(datum.last) + margin.top - 20}px`)
+            .style('right', null)
+            .style('left', `${width + margin.left}px`);
+        }
+
+        tip.appendSelect('h6')
+          .style('color', '#74c476')
           .text(country.name);
+
+        tip.appendSelect('p')
+          .text(Math.floor(datum.last).toLocaleString('en'))
+          .appendSelect('span')
+          .text(' doses/100K');
+
+        // plot
+        //   .appendSelect('text.title')
+        //   .attr('x', width + 5)
+        //   .attr('y', yScale(datum.last) - 10)
+        //   .style('fill', '#74c476')
+        //   .text(country.name);
+        // plot
+        //   .appendSelect('text.stat')
+        //   .attr('x', width + 5)
+        //   .attr('y', yScale(datum.last) + 7)
+        //   .text(Math.floor(datum.last).toLocaleString('en'))
+        //   .appendSelect('tspan')
+        //   .text(' doses/100K');
       })
-      .on('mouseleave', () => {
+      .on('mouseleave touchend', () => {
         // lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
       });
 
