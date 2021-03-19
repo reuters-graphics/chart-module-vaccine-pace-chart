@@ -2248,9 +2248,9 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         });
 
         if (isMobile) {
-          tip.style('top', "".concat(margin.top, "px")).style('right', '5px').style('left', null);
+          tip.style('text-align', 'right').style('top', "".concat(margin.top, "px")).style('right', '5px').style('left', null);
         } else {
-          tip.style('top', "".concat(yScale(datum.last) + margin.top - 20, "px")).style('right', null).style('left', "".concat(width + margin.left, "px"));
+          tip.style('text-align', 'left').style('top', "".concat(yScale(datum.last) + margin.top - 20, "px")).style('right', null).style('left', "".concat(width + margin.left, "px"));
         }
 
         tip.appendSelect('h6').style('color', '#74c476').text(country.name);

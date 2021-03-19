@@ -254,11 +254,13 @@ class VaccinePaceChart {
 
           if (isMobile) {
             tip
+              .style('text-align', 'right')
               .style('top', `${margin.top}px`)
               .style('right', '5px')
               .style('left', null);
           } else {
             tip
+              .style('text-align', 'left')
               .style('top', `${yScale(datum.last) + margin.top - 20}px`)
               .style('right', null)
               .style('left', `${width + margin.left}px`);
