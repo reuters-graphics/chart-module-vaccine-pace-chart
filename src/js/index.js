@@ -64,8 +64,8 @@ class VaccinePaceChart {
     ],
     margin: {
       top: 30,
-      right: 100,
-      bottom: 35,
+      right: 120,
+      bottom: 45,
       left: 10,
     },
     mobileMargin: {
@@ -122,15 +122,12 @@ class VaccinePaceChart {
     const height =
       containerWidth * aspectHeight.ratio - margin.top - margin.bottom;
 
+    const maxDays = max(data, (d) => d.length);
+
     const xScale = scaleLinear()
-      .domain([0, max(data, (d) => d.length)])
+      .domain([0, maxDays])
       .range([0, width])
       .nice();
-
-    // const xScaleReverse = scaleLinear()
-    //   .domain([max(data, d => d.length), 0])
-    //   .range([0, width])
-    //   .nice();
 
     const yScale = scaleLinear()
       .domain([0, max(data, (d) => d.max)])
@@ -157,15 +154,47 @@ class VaccinePaceChart {
     const defs = this.selection().select('svg').appendSelect('defs');
     const tip = this.selection().appendSelect('div.tip');
 
-    // plot
-    //   .appendSelect('g.axis.x')
-    //   .attr('transform', `translate(0,${height})`)
-    //   .call(axisBottom(xScaleReverse));
+    plot
+      .appendSelect('g.axis.x.minor-ticks')
+      .attr('transform', `translate(0,${height + 5})`)
+      .call(
+        axisBottom(xScale)
+          .tickFormat(d => '')
+          .ticks(isMobile ? maxDays / 2 : maxDays)
+      );
 
-    // plot
-    //   .appendSelect('g.axis.y')
-    //   .attr('transform', `translate(${width + 10}, 0)`)
-    //   .call(axisRight(yScale).ticks(4));
+    const tickValues = isMobile ?
+        [
+          0,
+          xScale.domain()[1],
+        ] :
+        [
+          0,
+          Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) * 10, // Nearest number 2/3 between max and min divisible 10
+          Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) * 10, // Nearest number 1/3 between max and min divisible 10
+          xScale.domain()[1],
+        ];
+
+    console.log(tickValues);
+
+    plot
+      .appendSelect('g.axis.x.major-ticks-and-labels')
+      .attr('transform', `translate(0,${height + 5})`)
+      .call(
+        axisBottom(xScale)
+          .tickSize(15)
+          .tickFormat(d => {
+            switch (d) {
+              case xScale.domain()[1]:
+                return 'Last reported';
+              case xScale.domain()[0]:
+                return `${xScale.domain()[1]} days earlier`;
+              default:
+                return `${xScale.domain()[1] - d}`;
+            }
+          })
+          .tickValues(tickValues)
+      );
 
     const line = d3Line()
       .x((d, i) => xScale(xScale.domain()[1] - i))
@@ -207,6 +236,25 @@ class VaccinePaceChart {
       .attr('stop-color', (d) => `rgba(255,255,255,${alphaScale(d.last)})`)
       .attr('stop-opacity', 1);
 
+    const key = plot
+      .appendSelect('g.chart-key');
+
+    key
+      .appendSelect('line')
+      .attr('stroke', '#74c476')
+      .style('stroke-width', 2)
+      .attr('x1', 0)
+      .attr('x2', 10)
+      .attr('y1', 10)
+      .attr('y2', 10);
+
+    key
+      .appendSelect('text')
+      .attr('fill', '#74c476')
+      .attr('x', 15)
+      .attr('y', 14)
+      .text('7-day rolling avg.');
+
     const lines = plot
       .appendSelect('g.lines')
       .selectAll('path.line')
@@ -218,6 +266,46 @@ class VaccinePaceChart {
       .style('stroke-width', 1)
       .style('fill', 'transparent')
       .attr('d', (d) => line(d.avgs));
+
+    const highlightLineFromPoint = (pointer) => {
+      const index = delaunay.find(...pointer);
+      const { country } = allPoints[index];
+
+      lines
+        .style('stroke-width', 1)
+        .attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
+
+      plot
+        .select(`path.country-${country.isoAlpha2}`)
+        .style('stroke-width', 2)
+        .attr('stroke', 'url(#gradient-highlight)');
+
+      const datum = data.find(
+        (d) => d.country.isoAlpha2 === country.isoAlpha2
+      );
+
+      if (isMobile) {
+        tip
+          .style('text-align', 'right')
+          .style('top', `${margin.top}px`)
+          .style('right', '5px')
+          .style('left', null);
+      } else {
+        tip
+          .style('text-align', 'left')
+          .style('top', `${yScale(datum.last) + margin.top - 20}px`)
+          .style('right', null)
+          .style('left', `${width + margin.left}px`);
+      }
+
+      tip.appendSelect('h6').style('color', '#74c476').text(country.name);
+
+      tip
+        .appendSelect('p')
+        .text(Math.floor(datum.last).toLocaleString('en'))
+        .appendSelect('span')
+        .text(' doses/100K');
+    };
 
     plot
       .appendSelect('rect')
@@ -235,51 +323,19 @@ class VaccinePaceChart {
         (event) => {
           if (event.cancelable) event.preventDefault();
           const pointer = d3.pointers(event)[0];
-          if (!pointer[0] || !pointer[1]) return;
-          const index = delaunay.find(...pointer);
-          const { country } = allPoints[index];
-
-          lines
-            .style('stroke-width', 1)
-            .attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
-
-          plot
-            .select(`path.country-${country.isoAlpha2}`)
-            .style('stroke-width', 2)
-            .attr('stroke', 'url(#gradient-highlight)');
-
-          const datum = data.find(
-            (d) => d.country.isoAlpha2 === country.isoAlpha2
-          );
-
-          if (isMobile) {
-            tip
-              .style('text-align', 'right')
-              .style('top', `${margin.top}px`)
-              .style('right', '5px')
-              .style('left', null);
-          } else {
-            tip
-              .style('text-align', 'left')
-              .style('top', `${yScale(datum.last) + margin.top - 20}px`)
-              .style('right', null)
-              .style('left', `${width + margin.left}px`);
-          }
-
-          tip.appendSelect('h6').style('color', '#74c476').text(country.name);
-
-          tip
-            .appendSelect('p')
-            .text(Math.floor(datum.last).toLocaleString('en'))
-            .appendSelect('span')
-            .text(' doses/100K');
-        },
-        { passive: false }
+          highlightLineFromPoint(pointer);
+        }
       )
-      .on('mouseleave touchend', (event) => {
+      .on('touchend', (event) => {
         if (event.cancelable) event.preventDefault();
         // lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
+      })
+      .on('mouseleave', () => {
+        if (event.cancelable) event.preventDefault();
+        // highlightLineFromPoint([width, 0]);
       });
+
+    highlightLineFromPoint([width, 0]); // Highlights the highest current country by picking a position in top right
 
     return this; // Generally, always return the chart class from draw!
   }
