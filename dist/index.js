@@ -2227,7 +2227,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       });
       gradients.appendSelect('stop.start').attr('offset', '0%').attr('stop-color', function (d) {
         return "rgba(255,255,255,".concat(alphaScale(d.last), ")");
-      }).attr('stop-opacity', isMobile ? 0.35 : 0.2);
+      }).attr('stop-opacity', isMobile ? 0.45 : 0.35);
       gradients.appendSelect('stop.end').attr('offset', '100%').attr('stop-color', function (d) {
         return "rgba(255,255,255,".concat(alphaScale(d.last), ")");
       }).attr('stop-opacity', 1);

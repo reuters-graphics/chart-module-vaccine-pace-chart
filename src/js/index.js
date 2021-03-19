@@ -224,7 +224,7 @@ class VaccinePaceChart {
       .appendSelect('stop.start')
       .attr('offset', '0%')
       .attr('stop-color', (d) => `rgba(255,255,255,${alphaScale(d.last)})`)
-      .attr('stop-opacity', isMobile ? 0.35 : 0.2);
+      .attr('stop-opacity', isMobile ? 0.45 : 0.35);
 
     gradients
       .appendSelect('stop.end')
