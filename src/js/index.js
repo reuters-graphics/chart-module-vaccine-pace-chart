@@ -114,7 +114,9 @@ class VaccinePaceChart {
 
     const margin = isMobile ? props.mobileMargin : props.margin;
 
-    const aspectHeight = props.aspectHeight.find(a => containerWidth > a.breakpoint);
+    const aspectHeight = props.aspectHeight.find(
+      (a) => containerWidth > a.breakpoint
+    );
 
     const width = containerWidth - margin.left - margin.right;
     const height =
@@ -254,11 +256,10 @@ class VaccinePaceChart {
             .style('left', `${width + margin.left}px`);
         }
 
-        tip.appendSelect('h6')
-          .style('color', '#74c476')
-          .text(country.name);
+        tip.appendSelect('h6').style('color', '#74c476').text(country.name);
 
-        tip.appendSelect('p')
+        tip
+          .appendSelect('p')
           .text(Math.floor(datum.last).toLocaleString('en'))
           .appendSelect('span')
           .text(' doses/100K');

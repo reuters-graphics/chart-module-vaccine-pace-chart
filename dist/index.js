@@ -2067,13 +2067,29 @@ var VaccinePaceChart = /*#__PURE__*/function () {
     _defineProperty(this, "defaultData", {});
 
     _defineProperty(this, "defaultProps", {
-      aspectHeight: 0.5,
+      aspectHeight: [{
+        breakpoint: 600,
+        ratio: 0.5
+      }, {
+        breakpoint: 500,
+        ratio: 0.75
+      }, {
+        breakpoint: 0,
+        ratio: 1
+      }],
       margin: {
         top: 30,
-        right: 150,
+        right: 100,
         bottom: 35,
-        left: 0
+        left: 10
       },
+      mobileMargin: {
+        top: 30,
+        right: 10,
+        bottom: 35,
+        left: 10
+      },
+      mobileBreakpoint: 600,
       fill: 'grey'
     });
   }
@@ -2147,15 +2163,19 @@ var VaccinePaceChart = /*#__PURE__*/function () {
           };
         });
       }));
-      var margin = props.margin;
       var container = this.selection().node();
 
       var _container$getBoundin = container.getBoundingClientRect(),
           containerWidth = _container$getBoundin.width; // Respect the width of your container!
 
 
+      var isMobile = containerWidth <= props.mobileBreakpoint;
+      var margin = isMobile ? props.mobileMargin : props.margin;
+      var aspectHeight = props.aspectHeight.find(function (a) {
+        return containerWidth > a.breakpoint;
+      });
       var width = containerWidth - margin.left - margin.right;
-      var height = containerWidth * props.aspectHeight - margin.top - margin.bottom;
+      var height = containerWidth * aspectHeight.ratio - margin.top - margin.bottom;
       var xScale = d3Scale.scaleLinear().domain([0, d3Array.max(data, function (d) {
         return d.length;
       })]).range([0, width]).nice(); // const xScaleReverse = scaleLinear()
@@ -2176,7 +2196,8 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       });
       var plot = this.selection().appendSelect('svg') // 👈 Use appendSelect instead of append for non-data-bound elements!
       .attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).appendSelect('g.plot').attr('transform', "translate(".concat(margin.left, ",").concat(margin.top, ")"));
-      var defs = this.selection().select('svg').appendSelect('defs'); // plot
+      var defs = this.selection().select('svg').appendSelect('defs');
+      var tip = this.selection().appendSelect('div.tip'); // plot
       //   .appendSelect('g.axis.x')
       //   .attr('transform', `translate(0,${height})`)
       //   .call(axisBottom(xScaleReverse));
@@ -2210,7 +2231,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       }).style('stroke-width', 1).style('fill', 'transparent').attr('d', function (d) {
         return line(d.avgs);
       });
-      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('mousemove', function (event) {
+      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('mousemove touchmove', function (event) {
         var pointer = d3.pointer(event);
         var index = delaunay.find.apply(delaunay, _toConsumableArray(pointer));
         var country = allPoints[index].country;
@@ -2221,8 +2242,28 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         var datum = data.find(function (d) {
           return d.country.isoAlpha2 === country.isoAlpha2;
         });
-        plot.appendSelect('text').attr('x', width + 5).attr('y', yScale(datum.last) + 5).style('fill', '#74c476').text(country.name);
-      }).on('mouseleave', function () {// lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
+
+        if (isMobile) {
+          tip.style('top', "".concat(margin.top, "px")).style('right', '5px').style('left', null);
+        } else {
+          tip.style('top', "".concat(yScale(datum.last) + margin.top - 20, "px")).style('right', null).style('left', "".concat(width + margin.left, "px"));
+        }
+
+        tip.appendSelect('h6').style('color', '#74c476').text(country.name);
+        tip.appendSelect('p').text(Math.floor(datum.last).toLocaleString('en')).appendSelect('span').text(' doses/100K'); // plot
+        //   .appendSelect('text.title')
+        //   .attr('x', width + 5)
+        //   .attr('y', yScale(datum.last) - 10)
+        //   .style('fill', '#74c476')
+        //   .text(country.name);
+        // plot
+        //   .appendSelect('text.stat')
+        //   .attr('x', width + 5)
+        //   .attr('y', yScale(datum.last) + 7)
+        //   .text(Math.floor(datum.last).toLocaleString('en'))
+        //   .appendSelect('tspan')
+        //   .text(' doses/100K');
+      }).on('mouseleave touchend', function () {// lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
       });
       return this; // Generally, always return the chart class from draw!
     }

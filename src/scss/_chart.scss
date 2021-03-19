@@ -6,13 +6,13 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
 #{$VaccinePaceChart-container} {
   background: #2f353f;
   position: relative;
-  div.tip{
-    position:absolute;
+  div.tip {
+    position: absolute;
     padding: 2px 5px;
     background-color: rgba(47, 53, 63, 0.6);
     border-radius: 4px;
     pointer-events: none;
-    h6{
+    h6 {
       font-size: 1rem;
       line-height: 1.1rem;
       font-weight: 800;
@@ -20,11 +20,11 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
     }
     p {
       margin: 0;
-      color: rgba(255,255,255,0.75);
+      color: rgba(255, 255, 255, 0.75);
       font-size: 0.9rem;
       span {
         font-size: 0.7rem;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255, 255, 255, 0.5);
         font-weight: 200;
       }
     }
@@ -33,17 +33,17 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
   text {
     font-family: $font-family-sans-serif;
     font-size: 0.875rem;
-    &.title{
+    &.title {
       font-weight: 800;
       font-size: 1rem;
     }
     &.stat {
-      fill: rgba(255,255,255,0.75);
+      fill: rgba(255, 255, 255, 0.75);
       font-size: 0.9rem;
       tspan {
         font-size: 0.7rem;
         margin-left: 5px;
-        fill: rgba(255,255,255,0.5);
+        fill: rgba(255, 255, 255, 0.5);
         font-weight: 200;
       }
     }
