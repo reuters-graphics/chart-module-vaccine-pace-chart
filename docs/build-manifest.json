@@ -1,7 +1,7 @@
 {
   "inputs": {
     "dist/scss/demo.css": {
-      "bytes": 310271,
+      "bytes": 311231,
       "imports": []
     },
     "dist/demo/App/App.svelte.css": {
@@ -322,7 +322,7 @@
       ]
     },
     "dist/js/index.js": {
-      "bytes": 9036,
+      "bytes": 10366,
       "imports": [
         {
           "path": "_snowpack/pkg/d3-transition.js",
@@ -439,10 +439,10 @@
       "imports": [],
       "inputs": {
         "dist/scss/demo.css": {
-          "bytesInOutput": 252067
+          "bytesInOutput": 252925
         }
       },
-      "bytes": 252085
+      "bytes": 252943
     },
     "../~~bundle~~/dist/demo/App/index.js": {
       "imports": [],
@@ -454,7 +454,7 @@
           "bytesInOutput": 0
         },
         "_snowpack/pkg/common/index-24c67e07.js": {
-          "bytesInOutput": 5317
+          "bytesInOutput": 5318
         },
         "_snowpack/pkg/svelte/internal.js": {
           "bytesInOutput": 0
@@ -475,7 +475,7 @@
           "bytesInOutput": 1018
         },
         "dist/demo/App/ChartContainer.svelte.js": {
-          "bytesInOutput": 2484
+          "bytesInOutput": 2482
         },
         "_snowpack/pkg/svelte.js": {
           "bytesInOutput": 0
@@ -487,10 +487,10 @@
           "bytesInOutput": 381
         },
         "_snowpack/pkg/svelte-highlight.js": {
-          "bytesInOutput": 14669
+          "bytesInOutput": 14663
         },
         "_snowpack/pkg/svelte-highlight/languages.js": {
-          "bytesInOutput": 876881
+          "bytesInOutput": 876879
         },
         "_snowpack/pkg/svelte-highlight/styles.js": {
           "bytesInOutput": 109889
@@ -499,22 +499,22 @@
           "bytesInOutput": 1372
         },
         "dist/demo/App/Docs.svelte.js": {
-          "bytesInOutput": 1614
+          "bytesInOutput": 1618
         },
         "dist/demo/App/Explorer.svelte.css": {
           "bytesInOutput": 0
         },
         "_snowpack/pkg/svelte-json-tree.js": {
-          "bytesInOutput": 22576
+          "bytesInOutput": 22614
         },
         "dist/demo/App/Explorer.svelte.js": {
-          "bytesInOutput": 761
+          "bytesInOutput": 762
         },
         "_snowpack/pkg/common/string-5bc924f5.js": {
           "bytesInOutput": 8243
         },
         "_snowpack/pkg/common/index-2c098da7.js": {
-          "bytesInOutput": 12028
+          "bytesInOutput": 12025
         },
         "_snowpack/pkg/d3-transition.js": {
           "bytesInOutput": 15680
@@ -523,10 +523,10 @@
           "bytesInOutput": 1017
         },
         "_snowpack/pkg/d3-axis.js": {
-          "bytesInOutput": 29
+          "bytesInOutput": 2595
         },
         "_snowpack/pkg/common/path-537f9822.js": {
-          "bytesInOutput": 1863
+          "bytesInOutput": 1860
         },
         "_snowpack/pkg/d3-shape.js": {
           "bytesInOutput": 2470
@@ -535,10 +535,10 @@
           "bytesInOutput": 183
         },
         "_snowpack/pkg/@reuters-graphics/graphics-atlas-client.js": {
-          "bytesInOutput": 238008
+          "bytesInOutput": 238006
         },
         "_snowpack/pkg/d3-delaunay.js": {
-          "bytesInOutput": 16192
+          "bytesInOutput": 16164
         },
         "_snowpack/pkg/d3-appendselect.js": {
           "bytesInOutput": 948
@@ -556,22 +556,22 @@
           "bytesInOutput": 0
         },
         "_snowpack/pkg/d3-scale.js": {
-          "bytesInOutput": 10027
+          "bytesInOutput": 10019
         },
         "dist/js/index.js": {
-          "bytesInOutput": 3717
+          "bytesInOutput": 4598
         },
         "dist/demo/Chart.svelte.js": {
-          "bytesInOutput": 1297
+          "bytesInOutput": 1300
         },
         "dist/demo/App/App.svelte.js": {
-          "bytesInOutput": 898
+          "bytesInOutput": 901
         },
         "dist/demo/App/index.js": {
           "bytesInOutput": 44
         }
       },
-      "bytes": 1447653
+      "bytes": 1451096
     },
     "../~~bundle~~/dist/demo/App/index.css": {
       "imports": [],

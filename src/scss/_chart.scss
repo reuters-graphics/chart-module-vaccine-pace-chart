@@ -27,14 +27,14 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
       color: rgba(255, 255, 255, 0.75);
       font-size: 16px;
       span {
-        font-size:13px;
+        font-size: 13px;
         color: rgba(255, 255, 255, 0.5);
         font-weight: 200;
       }
     }
   }
 
-  g.chart-key{
+  g.chart-key {
     text {
       fill: rgba(255, 255, 255, 0.5);
       font-size: 14px;
@@ -61,24 +61,24 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
       }
     }
   }
-  .axis.minor-ticks{
+  .axis.minor-ticks {
     line {
-      stroke: rgba(255,255,255,0.25);
+      stroke: rgba(255, 255, 255, 0.25);
     }
   }
-  .axis.major-ticks-and-labels{
+  .axis.major-ticks-and-labels {
     line {
-      stroke: rgba(255,255,255,0.75);
+      stroke: rgba(255, 255, 255, 0.75);
     }
     text {
-      fill: rgba(255,255,255,0.5);
+      fill: rgba(255, 255, 255, 0.5);
       font-size: 12px;
       font-family: $font-family-sans-serif;
       font-weight: 200;
     }
-    g.tick:first-of-type{
+    g.tick:first-of-type {
       text {
-        text-anchor:start;
+        text-anchor: start;
       }
     }
     g.tick:last-of-type {

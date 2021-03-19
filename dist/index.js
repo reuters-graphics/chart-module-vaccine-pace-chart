@@ -1,7 +1,7 @@
 'use strict';
 
 var d3 = require('d3-selection');
-require('d3-axis');
+var d3Axis = require('d3-axis');
 var d3Array = require('d3-array');
 var AtlasMetadataClient = require('@reuters-graphics/graphics-atlas-client');
 var d3Delaunay = require('d3-delaunay');
@@ -2079,8 +2079,8 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       }],
       margin: {
         top: 30,
-        right: 100,
-        bottom: 35,
+        right: 120,
+        bottom: 45,
         left: 10
       },
       mobileMargin: {
@@ -2176,13 +2176,10 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       });
       var width = containerWidth - margin.left - margin.right;
       var height = containerWidth * aspectHeight.ratio - margin.top - margin.bottom;
-      var xScale = d3Scale.scaleLinear().domain([0, d3Array.max(data, function (d) {
+      var maxDays = d3Array.max(data, function (d) {
         return d.length;
-      })]).range([0, width]).nice(); // const xScaleReverse = scaleLinear()
-      //   .domain([max(data, d => d.length), 0])
-      //   .range([0, width])
-      //   .nice();
-
+      });
+      var xScale = d3Scale.scaleLinear().domain([0, maxDays]).range([0, width]).nice();
       var yScale = d3Scale.scaleLinear().domain([0, d3Array.max(data, function (d) {
         return d.max;
       })]).range([height, 0]).nice();
@@ -2197,15 +2194,26 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       var plot = this.selection().appendSelect('svg') // 👈 Use appendSelect instead of append for non-data-bound elements!
       .attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).appendSelect('g.plot').attr('transform', "translate(".concat(margin.left, ",").concat(margin.top, ")"));
       var defs = this.selection().select('svg').appendSelect('defs');
-      var tip = this.selection().appendSelect('div.tip'); // plot
-      //   .appendSelect('g.axis.x')
-      //   .attr('transform', `translate(0,${height})`)
-      //   .call(axisBottom(xScaleReverse));
-      // plot
-      //   .appendSelect('g.axis.y')
-      //   .attr('transform', `translate(${width + 10}, 0)`)
-      //   .call(axisRight(yScale).ticks(4));
+      var tip = this.selection().appendSelect('div.tip');
+      plot.appendSelect('g.axis.x.minor-ticks').attr('transform', "translate(0,".concat(height + 5, ")")).call(d3Axis.axisBottom(xScale).tickFormat(function (d) {
+        return '';
+      }).ticks(isMobile ? maxDays / 2 : maxDays));
+      var tickValues = isMobile ? [0, xScale.domain()[1]] : [0, Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) * 10, // Nearest number 2/3 between max and min divisible 10
+      Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) * 10, // Nearest number 1/3 between max and min divisible 10
+      xScale.domain()[1]];
+      console.log(tickValues);
+      plot.appendSelect('g.axis.x.major-ticks-and-labels').attr('transform', "translate(0,".concat(height + 5, ")")).call(d3Axis.axisBottom(xScale).tickSize(15).tickFormat(function (d) {
+        switch (d) {
+          case xScale.domain()[1]:
+            return 'Last reported';
 
+          case xScale.domain()[0]:
+            return "".concat(xScale.domain()[1], " days earlier");
+
+          default:
+            return "".concat(xScale.domain()[1] - d);
+        }
+      }).tickValues(tickValues));
       var line = d3Line().x(function (d, i) {
         return xScale(xScale.domain()[1] - i);
       }).y(function (d) {
@@ -2223,6 +2231,9 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       gradients.appendSelect('stop.end').attr('offset', '100%').attr('stop-color', function (d) {
         return "rgba(255,255,255,".concat(alphaScale(d.last), ")");
       }).attr('stop-opacity', 1);
+      var key = plot.appendSelect('g.chart-key');
+      key.appendSelect('line').attr('stroke', '#74c476').style('stroke-width', 2).attr('x1', 0).attr('x2', 10).attr('y1', 10).attr('y2', 10);
+      key.appendSelect('text').attr('fill', '#74c476').attr('x', 15).attr('y', 14).text('7-day rolling avg.');
       var lines = plot.appendSelect('g.lines').selectAll('path.line').data(data).join('path').attr('class', function (d) {
         return "line country-".concat(d.country.isoAlpha2);
       }) // .style('stroke', d => `rgba(255,255,255,${alphaScale(d.max)})`)
@@ -2231,12 +2242,8 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       }).style('stroke-width', 1).style('fill', 'transparent').attr('d', function (d) {
         return line(d.avgs);
       });
-      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('touchstart', function (event) {
-        if (event.cancelable) event.preventDefault();
-      }).on('mousemove touchmove', function (event) {
-        if (event.cancelable) event.preventDefault();
-        var pointer = d3.pointers(event)[0];
-        if (!pointer[0] || !pointer[1]) return;
+
+      var highlightLineFromPoint = function highlightLineFromPoint(pointer) {
         var index = delaunay.find.apply(delaunay, _toConsumableArray(pointer));
         var country = allPoints[index].country;
         lines.style('stroke-width', 1).attr('stroke', function (d) {
@@ -2255,11 +2262,21 @@ var VaccinePaceChart = /*#__PURE__*/function () {
 
         tip.appendSelect('h6').style('color', '#74c476').text(country.name);
         tip.appendSelect('p').text(Math.floor(datum.last).toLocaleString('en')).appendSelect('span').text(' doses/100K');
-      }, {
-        passive: false
-      }).on('mouseleave touchend', function (event) {
+      };
+
+      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('touchstart', function (event) {
+        if (event.cancelable) event.preventDefault();
+      }).on('mousemove touchmove', function (event) {
+        if (event.cancelable) event.preventDefault();
+        var pointer = d3.pointers(event)[0];
+        highlightLineFromPoint(pointer);
+      }).on('touchend', function (event) {
         if (event.cancelable) event.preventDefault(); // lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
+      }).on('mouseleave', function () {
+        if (event.cancelable) event.preventDefault(); // highlightLineFromPoint([width, 0]);
       });
+      highlightLineFromPoint([width, 0]); // Highlights the highest current country by picking a position in top right
+
       return this; // Generally, always return the chart class from draw!
     }
   }]);

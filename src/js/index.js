@@ -124,10 +124,7 @@ class VaccinePaceChart {
 
     const maxDays = max(data, (d) => d.length);
 
-    const xScale = scaleLinear()
-      .domain([0, maxDays])
-      .range([0, width])
-      .nice();
+    const xScale = scaleLinear().domain([0, maxDays]).range([0, width]).nice();
 
     const yScale = scaleLinear()
       .domain([0, max(data, (d) => d.max)])
@@ -159,19 +156,18 @@ class VaccinePaceChart {
       .attr('transform', `translate(0,${height + 5})`)
       .call(
         axisBottom(xScale)
-          .tickFormat(d => '')
+          .tickFormat((d) => '')
           .ticks(isMobile ? maxDays / 2 : maxDays)
       );
 
-    const tickValues = isMobile ?
-        [
+    const tickValues = isMobile
+      ? [0, xScale.domain()[1]]
+      : [
           0,
-          xScale.domain()[1],
-        ] :
-        [
-          0,
-          Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) * 10, // Nearest number 2/3 between max and min divisible 10
-          Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) * 10, // Nearest number 1/3 between max and min divisible 10
+          Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) *
+            10, // Nearest number 2/3 between max and min divisible 10
+          Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) *
+            10, // Nearest number 1/3 between max and min divisible 10
           xScale.domain()[1],
         ];
 
@@ -183,7 +179,7 @@ class VaccinePaceChart {
       .call(
         axisBottom(xScale)
           .tickSize(15)
-          .tickFormat(d => {
+          .tickFormat((d) => {
             switch (d) {
               case xScale.domain()[1]:
                 return 'Last reported';
@@ -236,8 +232,7 @@ class VaccinePaceChart {
       .attr('stop-color', (d) => `rgba(255,255,255,${alphaScale(d.last)})`)
       .attr('stop-opacity', 1);
 
-    const key = plot
-      .appendSelect('g.chart-key');
+    const key = plot.appendSelect('g.chart-key');
 
     key
       .appendSelect('line')
@@ -280,9 +275,7 @@ class VaccinePaceChart {
         .style('stroke-width', 2)
         .attr('stroke', 'url(#gradient-highlight)');
 
-      const datum = data.find(
-        (d) => d.country.isoAlpha2 === country.isoAlpha2
-      );
+      const datum = data.find((d) => d.country.isoAlpha2 === country.isoAlpha2);
 
       if (isMobile) {
         tip
@@ -318,14 +311,11 @@ class VaccinePaceChart {
       .on('touchstart', (event) => {
         if (event.cancelable) event.preventDefault();
       })
-      .on(
-        'mousemove touchmove',
-        (event) => {
-          if (event.cancelable) event.preventDefault();
-          const pointer = d3.pointers(event)[0];
-          highlightLineFromPoint(pointer);
-        }
-      )
+      .on('mousemove touchmove', (event) => {
+        if (event.cancelable) event.preventDefault();
+        const pointer = d3.pointers(event)[0];
+        highlightLineFromPoint(pointer);
+      })
       .on('touchend', (event) => {
         if (event.cancelable) event.preventDefault();
         // lines.attr('stroke', (d) => `url(#gradient-${d.country.isoAlpha2})`);
