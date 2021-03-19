@@ -208,6 +208,7 @@ class VaccinePaceChart {
       .attr('stop-opacity', 1);
 
     const lines = plot
+      .appendSelect('g.lines')
       .selectAll('path.line')
       .data(data)
       .join('path')
@@ -226,9 +227,9 @@ class VaccinePaceChart {
       .attr('width', width)
       .style('fill', 'transparent')
       .style('cursor', 'crosshair')
-      .on('touchstart', (event) => event.preventDefault())
       .on('mousemove touchmove', (event) => {
-        const pointer = d3.pointer(event);
+        event.preventDefault();
+        const pointer = d3.pointers(event)[0];
         if (!pointer[0] || !pointer[1]) return;
         const index = delaunay.find(...pointer);
         const { country } = allPoints[index];

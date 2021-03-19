@@ -2223,7 +2223,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       gradients.appendSelect('stop.end').attr('offset', '100%').attr('stop-color', function (d) {
         return "rgba(255,255,255,".concat(alphaScale(d.last), ")");
       }).attr('stop-opacity', 1);
-      var lines = plot.selectAll('path.line').data(data).join('path').attr('class', function (d) {
+      var lines = plot.appendSelect('g.lines').selectAll('path.line').data(data).join('path').attr('class', function (d) {
         return "line country-".concat(d.country.isoAlpha2);
       }) // .style('stroke', d => `rgba(255,255,255,${alphaScale(d.max)})`)
       .attr('stroke', function (d) {
@@ -2231,10 +2231,9 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       }).style('stroke-width', 1).style('fill', 'transparent').attr('d', function (d) {
         return line(d.avgs);
       });
-      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('touchstart', function (event) {
-        return event.preventDefault();
-      }).on('mousemove touchmove', function (event) {
-        var pointer = d3.pointer(event);
+      plot.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', height).attr('width', width).style('fill', 'transparent').style('cursor', 'crosshair').on('mousemove touchmove', function (event) {
+        event.preventDefault();
+        var pointer = d3.pointers(event)[0];
         if (!pointer[0] || !pointer[1]) return;
         var index = delaunay.find.apply(delaunay, _toConsumableArray(pointer));
         var country = allPoints[index].country;
