@@ -171,8 +171,6 @@ class VaccinePaceChart {
           xScale.domain()[1],
         ];
 
-    console.log(tickValues);
-
     plot
       .appendSelect('g.axis.x.major-ticks-and-labels')
       .attr('transform', `translate(0,${height + 5})`)

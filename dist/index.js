@@ -2201,7 +2201,6 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       var tickValues = isMobile ? [0, xScale.domain()[1]] : [0, Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) * 10, // Nearest number 2/3 between max and min divisible 10
       Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) * 10, // Nearest number 1/3 between max and min divisible 10
       xScale.domain()[1]];
-      console.log(tickValues);
       plot.appendSelect('g.axis.x.major-ticks-and-labels').attr('transform', "translate(0,".concat(height + 5, ")")).call(d3Axis.axisBottom(xScale).tickSize(15).tickFormat(function (d) {
         switch (d) {
           case xScale.domain()[1]:
