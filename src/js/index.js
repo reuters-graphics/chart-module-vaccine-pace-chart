@@ -76,6 +76,7 @@ class VaccinePaceChart {
     },
     mobileBreakpoint: 600,
     fill: 'grey',
+    highlight: '#74c476',
   };
 
   /**
@@ -157,12 +158,12 @@ class VaccinePaceChart {
       .call(
         axisBottom(xScale)
           .tickFormat((d) => '')
-          .ticks(isMobile ? maxDays / 2 : maxDays)
+          .ticks(isMobile ? 0 : maxDays)
       );
 
-    const tickValues = isMobile
-      ? [0, xScale.domain()[1]]
-      : [
+    const tickValues = isMobile ?
+        [0, xScale.domain()[1]] :
+        [
           0,
           Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) *
             10, // Nearest number 2/3 between max and min divisible 10
@@ -202,13 +203,13 @@ class VaccinePaceChart {
     highlightDef
       .appendSelect('stop.start')
       .attr('offset', '0%')
-      .attr('stop-color', '#74c476')
+      .attr('stop-color', props.highlight)
       .attr('stop-opacity', 0.1);
 
     highlightDef
       .appendSelect('stop.end')
       .attr('offset', '100%')
-      .attr('stop-color', '#74c476')
+      .attr('stop-color', props.highlight)
       .attr('stop-opacity', 1);
 
     const gradients = defs
@@ -234,7 +235,7 @@ class VaccinePaceChart {
 
     key
       .appendSelect('line')
-      .attr('stroke', '#74c476')
+      .attr('stroke', props.highlight)
       .style('stroke-width', 2)
       .attr('x1', 0)
       .attr('x2', 10)
@@ -243,7 +244,7 @@ class VaccinePaceChart {
 
     key
       .appendSelect('text')
-      .attr('fill', '#74c476')
+      .attr('fill', props.highlight)
       .attr('x', 15)
       .attr('y', 14)
       .text('7-day rolling avg.');
@@ -289,7 +290,7 @@ class VaccinePaceChart {
           .style('left', `${width + margin.left}px`);
       }
 
-      tip.appendSelect('h6').style('color', '#74c476').text(country.name);
+      tip.appendSelect('h6').style('color', props.highlight).text(country.name);
 
       tip
         .appendSelect('p')
