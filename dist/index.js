@@ -2090,7 +2090,11 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         left: 10
       },
       mobileBreakpoint: 600,
-      fill: 'grey'
+      fill: 'grey',
+      highlight: '#74c476',
+      axis: {
+        minorTicks: [10, null]
+      }
     });
   }
 
@@ -2197,7 +2201,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       var tip = this.selection().appendSelect('div.tip');
       plot.appendSelect('g.axis.x.minor-ticks').attr('transform', "translate(0,".concat(height + 5, ")")).call(d3Axis.axisBottom(xScale).tickFormat(function (d) {
         return '';
-      }).ticks(isMobile ? maxDays / 2 : maxDays));
+      }).ticks(isMobile ? props.axis.minorTicks[0] || 10 : props.axis.minorTicks[1] || maxDays));
       var tickValues = isMobile ? [0, xScale.domain()[1]] : [0, Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) * 10, // Nearest number 2/3 between max and min divisible 10
       Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) * 10, // Nearest number 1/3 between max and min divisible 10
       xScale.domain()[1]];
@@ -2219,8 +2223,8 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         return yScale(d);
       }).curve(curveCardinal);
       var highlightDef = defs.appendSelect('linearGradient.highlight').attr('id', 'gradient-highlight');
-      highlightDef.appendSelect('stop.start').attr('offset', '0%').attr('stop-color', '#74c476').attr('stop-opacity', 0.1);
-      highlightDef.appendSelect('stop.end').attr('offset', '100%').attr('stop-color', '#74c476').attr('stop-opacity', 1);
+      highlightDef.appendSelect('stop.start').attr('offset', '0%').attr('stop-color', props.highlight).attr('stop-opacity', 0.1);
+      highlightDef.appendSelect('stop.end').attr('offset', '100%').attr('stop-color', props.highlight).attr('stop-opacity', 1);
       var gradients = defs.selectAll('linearGradient.country').data(data).join('linearGradient').attr('class', 'country').attr('id', function (d) {
         return "gradient-".concat(d.country.isoAlpha2);
       });
@@ -2231,8 +2235,8 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         return "rgba(255,255,255,".concat(alphaScale(d.last), ")");
       }).attr('stop-opacity', 1);
       var key = plot.appendSelect('g.chart-key');
-      key.appendSelect('line').attr('stroke', '#74c476').style('stroke-width', 2).attr('x1', 0).attr('x2', 10).attr('y1', 10).attr('y2', 10);
-      key.appendSelect('text').attr('fill', '#74c476').attr('x', 15).attr('y', 14).text('7-day rolling avg.');
+      key.appendSelect('line').attr('stroke', props.highlight).style('stroke-width', 2).attr('x1', 0).attr('x2', 10).attr('y1', 10).attr('y2', 10);
+      key.appendSelect('text').attr('fill', props.highlight).attr('x', 15).attr('y', 14).text('7-day rolling avg.');
       var lines = plot.appendSelect('g.lines').selectAll('path.line').data(data).join('path').attr('class', function (d) {
         return "line country-".concat(d.country.isoAlpha2);
       }) // .style('stroke', d => `rgba(255,255,255,${alphaScale(d.max)})`)
@@ -2259,7 +2263,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
           tip.style('text-align', 'left').style('top', "".concat(yScale(datum.last) + margin.top - 20, "px")).style('right', null).style('left', "".concat(width + margin.left, "px"));
         }
 
-        tip.appendSelect('h6').style('color', '#74c476').text(country.name);
+        tip.appendSelect('h6').style('color', props.highlight).text(country.name);
         tip.appendSelect('p').text(Math.floor(datum.last).toLocaleString('en')).appendSelect('span').text(' doses/100K');
       };
 
