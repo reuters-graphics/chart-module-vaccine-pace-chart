@@ -77,6 +77,9 @@ class VaccinePaceChart {
     mobileBreakpoint: 600,
     fill: 'grey',
     highlight: '#74c476',
+    axis: {
+      minorTicks: [10, null],
+    },
   };
 
   /**
@@ -158,7 +161,7 @@ class VaccinePaceChart {
       .call(
         axisBottom(xScale)
           .tickFormat((d) => '')
-          .ticks(isMobile ? 0 : maxDays)
+          .ticks(isMobile ? props.axis.minorTicks[0] || 10 : props.axis.minorTicks[1] || maxDays)
       );
 
     const tickValues = isMobile ?
