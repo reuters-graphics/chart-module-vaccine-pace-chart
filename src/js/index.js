@@ -80,6 +80,10 @@ class VaccinePaceChart {
     axis: {
       minorTicks: [10, null],
     },
+    keyOffsets: {
+      x: 0,
+      y: 0,
+    },
   };
 
   /**
@@ -155,22 +159,22 @@ class VaccinePaceChart {
     const defs = this.selection().select('svg').appendSelect('defs');
     const tip = this.selection().appendSelect('div.tip');
 
-    plot
-      .appendSelect('g.axis.x.minor-ticks')
-      .attr('transform', `translate(0,${height + 5})`)
-      .call(
-        axisBottom(xScale)
-          .tickFormat((d) => '')
-          .ticks(
-            isMobile
-              ? props.axis.minorTicks[0] || 10
-              : props.axis.minorTicks[1] || maxDays
-          )
-      );
+    // plot
+    //   .appendSelect('g.axis.x.minor-ticks')
+    //   .attr('transform', `translate(0,${height + 5})`)
+    //   .call(
+    //     axisBottom(xScale)
+    //       .tickFormat((d) => '')
+    //       .ticks(
+    //         isMobile ?
+    //             props.axis.minorTicks[0] || 10 :
+    //           props.axis.minorTicks[1] || maxDays
+    //       )
+    //   );
 
-    const tickValues = isMobile
-      ? [0, xScale.domain()[1]]
-      : [
+    const tickValues = isMobile ?
+        [0, xScale.domain()[1]] :
+        [
           0,
           Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) *
             10, // Nearest number 2/3 between max and min divisible 10
@@ -244,16 +248,16 @@ class VaccinePaceChart {
       .appendSelect('line')
       .attr('stroke', props.highlight)
       .style('stroke-width', 2)
-      .attr('x1', 0)
-      .attr('x2', 10)
-      .attr('y1', 10)
-      .attr('y2', 10);
+      .attr('x1', 0 + props.keyOffsets.x)
+      .attr('x2', 10 + props.keyOffsets.x)
+      .attr('y1', 10 + props.keyOffsets.y)
+      .attr('y2', 10 + props.keyOffsets.y);
 
     key
       .appendSelect('text')
       .attr('fill', props.highlight)
-      .attr('x', 15)
-      .attr('y', 14)
+      .attr('x', 15 + props.keyOffsets.x)
+      .attr('y', 14 + props.keyOffsets.y)
       .text('7-day rolling avg.');
 
     const lines = plot
@@ -292,7 +296,7 @@ class VaccinePaceChart {
       } else {
         tip
           .style('text-align', 'left')
-          .style('top', `${yScale(datum.last) + margin.top - 20}px`)
+          .style('top', `${yScale(datum.last) + margin.top - 12}px`)
           .style('right', null)
           .style('left', `${width + margin.left}px`);
       }
