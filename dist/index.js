@@ -2094,6 +2094,10 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       highlight: '#74c476',
       axis: {
         minorTicks: [10, null]
+      },
+      keyOffsets: {
+        x: 0,
+        y: 0
       }
     });
   }
@@ -2198,10 +2202,19 @@ var VaccinePaceChart = /*#__PURE__*/function () {
       var plot = this.selection().appendSelect('svg') // 👈 Use appendSelect instead of append for non-data-bound elements!
       .attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).appendSelect('g.plot').attr('transform', "translate(".concat(margin.left, ",").concat(margin.top, ")"));
       var defs = this.selection().select('svg').appendSelect('defs');
-      var tip = this.selection().appendSelect('div.tip');
-      plot.appendSelect('g.axis.x.minor-ticks').attr('transform', "translate(0,".concat(height + 5, ")")).call(d3Axis.axisBottom(xScale).tickFormat(function (d) {
-        return '';
-      }).ticks(isMobile ? props.axis.minorTicks[0] || 10 : props.axis.minorTicks[1] || maxDays));
+      var tip = this.selection().appendSelect('div.tip'); // plot
+      //   .appendSelect('g.axis.x.minor-ticks')
+      //   .attr('transform', `translate(0,${height + 5})`)
+      //   .call(
+      //     axisBottom(xScale)
+      //       .tickFormat((d) => '')
+      //       .ticks(
+      //         isMobile ?
+      //             props.axis.minorTicks[0] || 10 :
+      //           props.axis.minorTicks[1] || maxDays
+      //       )
+      //   );
+
       var tickValues = isMobile ? [0, xScale.domain()[1]] : [0, Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) * 10, // Nearest number 2/3 between max and min divisible 10
       Math.round((xScale.domain()[1] - xScale.domain()[1] * (1 / 3)) / 10) * 10, // Nearest number 1/3 between max and min divisible 10
       xScale.domain()[1]];
@@ -2235,8 +2248,8 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         return "rgba(255,255,255,".concat(alphaScale(d.last), ")");
       }).attr('stop-opacity', 1);
       var key = plot.appendSelect('g.chart-key');
-      key.appendSelect('line').attr('stroke', props.highlight).style('stroke-width', 2).attr('x1', 0).attr('x2', 10).attr('y1', 10).attr('y2', 10);
-      key.appendSelect('text').attr('fill', props.highlight).attr('x', 15).attr('y', 14).text('7-day rolling avg.');
+      key.appendSelect('line').attr('stroke', props.highlight).style('stroke-width', 2).attr('x1', 0 + props.keyOffsets.x).attr('x2', 10 + props.keyOffsets.x).attr('y1', 10 + props.keyOffsets.y).attr('y2', 10 + props.keyOffsets.y);
+      key.appendSelect('text').attr('fill', props.highlight).attr('x', 15 + props.keyOffsets.x).attr('y', 14 + props.keyOffsets.y).text('7-day rolling avg.');
       var lines = plot.appendSelect('g.lines').selectAll('path.line').data(data).join('path').attr('class', function (d) {
         return "line country-".concat(d.country.isoAlpha2);
       }) // .style('stroke', d => `rgba(255,255,255,${alphaScale(d.max)})`)
@@ -2260,7 +2273,7 @@ var VaccinePaceChart = /*#__PURE__*/function () {
         if (isMobile) {
           tip.style('text-align', 'right').style('top', "".concat(margin.top, "px")).style('right', '5px').style('left', null);
         } else {
-          tip.style('text-align', 'left').style('top', "".concat(yScale(datum.last) + margin.top - 20, "px")).style('right', null).style('left', "".concat(width + margin.left, "px"));
+          tip.style('text-align', 'left').style('top', "".concat(yScale(datum.last) + margin.top - 12, "px")).style('right', null).style('left', "".concat(width + margin.left, "px"));
         }
 
         tip.appendSelect('h6').style('color', props.highlight).text(country.name);

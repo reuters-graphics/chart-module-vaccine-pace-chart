@@ -67,11 +67,12 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
   }
   .axis.major-ticks-and-labels {
     line {
-      stroke: rgba(255, 255, 255, 0.75);
+      stroke: rgba(255, 255, 255, 0.25);
     }
     text {
-      fill: rgba(255, 255, 255, 0.5);
-      font-size: 12px;
+      fill: #999;
+      font-size: 13px;
+      letter-spacing: 0.4px;
       font-family: $font-family-sans-serif;
       font-weight: 200;
     }
@@ -88,17 +89,17 @@ $VaccinePaceChart-container: '#vaccine-pace-chart-container' !default;
   }
   .axis {
     pointer-events: none;
-    text {
-      font-family: $font-family-sans-serif;
-      fill: $gray-400;
-      font-size: 0.875rem;
-    }
+    // text {
+    //   font-family: $font-family-sans-serif;
+    //   fill: $gray-400;
+    //   font-size: 0.875rem;
+    // }
 
-    line,
-    path {
-      stroke: $gray-200;
-      stroke-width: 1px;
-    }
+    // line,
+    // path {
+    //   stroke: $gray-200;
+    //   stroke-width: 1px;
+    // }
 
     path.domain {
       display: none;

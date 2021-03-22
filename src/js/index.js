@@ -172,9 +172,9 @@ class VaccinePaceChart {
     //       )
     //   );
 
-    const tickValues = isMobile ?
-        [0, xScale.domain()[1]] :
-        [
+    const tickValues = isMobile
+      ? [0, xScale.domain()[1]]
+      : [
           0,
           Math.round((xScale.domain()[1] - xScale.domain()[1] * (2 / 3)) / 10) *
             10, // Nearest number 2/3 between max and min divisible 10
